@@ -14,6 +14,18 @@ class Renderer:
         """ Return a string representing multiple events """
         raise NotImplementedError()
 
+    @staticmethod
+    def pluralize(singular_word, number):
+        if number == 1:
+            return singular_word
+        else:
+            if singular_word == 'person':
+                return 'people'
+            elif singular_word == 'comment':
+                return 'comments'
+            else:
+                assert "Unknown word to pluralize"
+
 
 class EnterRenderer(Renderer):
     @staticmethod
@@ -23,8 +35,9 @@ class EnterRenderer(Renderer):
 
     @staticmethod
     def multiple_render(events):
-        actor_set = {event.actor for event in events}
-        return "{0} person(s) entered".format(len(actor_set))
+        num_actors = len({event.actor for event in events})
+        pluralizable_word = EnterRenderer.pluralize("person", num_actors)
+        return "{0} {1} entered".format(num_actors, pluralizable_word)
 
 
 class LeaveRenderer(Renderer):
@@ -35,8 +48,9 @@ class LeaveRenderer(Renderer):
 
     @staticmethod
     def multiple_render(events):
-        actor_set = {event.actor for event in events}
-        return "{0} person(s) left".format(len(actor_set))
+        num_actors = len({event.actor for event in events})
+        pluralizable_word = LeaveRenderer.pluralize("person", num_actors)
+        return "{0} {1} left".format(num_actors, pluralizable_word)
 
 
 class CommentRenderer(Renderer):
@@ -47,7 +61,9 @@ class CommentRenderer(Renderer):
 
     @staticmethod
     def multiple_render(events):
-        return "{0} comment(s)".format(len(events))
+        num_comments = len(events)
+        pluralizable_word = CommentRenderer.pluralize("comment", num_comments)
+        return "{0} {1}".format(num_comments, pluralizable_word)
 
 
 class HighFiveRenderer(Renderer):
@@ -58,6 +74,9 @@ class HighFiveRenderer(Renderer):
 
     @staticmethod
     def multiple_render(events):
-        actor_set = {event.actor for event in events}
-        actee_set = {event.actee for event in events}
-        return "{0} person(s) high fived {1} person(s)".format(len(actor_set), len(actee_set))
+        num_actors = len({event.actor for event in events})
+        pluralizable_actors = HighFiveRenderer.pluralize("person", num_actors)
+        num_actees = len({event.actee for event in events})
+        pluralizable_actees = HighFiveRenderer.pluralize("person", num_actees)
+        return "{0} {1} high fived {2} {3}".format(
+            num_actors, pluralizable_actors, num_actees, pluralizable_actees)

@@ -45,7 +45,7 @@ class TestHourlyRender(unittest.TestCase):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=23, minute=59)
         event = events.EnterEvent(test_date, "Kate")
         output = main.render_hourly()
-        self.assertEqual(output.strip(), "11pm:\t1 person(s) entered")
+        self.assertEqual(output.strip(), "11pm:\t1 person entered")
 
     def test_one_leave_one_later_comment(self):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=59)
@@ -53,7 +53,7 @@ class TestHourlyRender(unittest.TestCase):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=3, minute=59)
         event = events.CommentEvent(test_date, "Kate", "was here")
         output = main.render_hourly()
-        self.assertEqual(output.strip(), "2am:\t1 person(s) left\n\t\n3am:\t1 comment(s)")
+        self.assertEqual(output.strip(), "2am:\t1 person left\n\t\n3am:\t1 comment")
 
     def test_multiple_enters_one_person(self):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=50)
@@ -61,13 +61,13 @@ class TestHourlyRender(unittest.TestCase):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=55)
         event = events.EnterEvent(test_date, "Kate")
         output = main.render_hourly()
-        self.assertEqual(output.strip(), "2am:\t1 person(s) entered")
+        self.assertEqual(output.strip(), "2am:\t1 person entered")
 
     def test_one_high_five(self):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=50)
         event = events.HighFiveEvent(test_date, "Kate", "John")
         output = main.render_hourly()
-        self.assertEqual(output.strip(), "2am:\t1 person(s) high fived 1 person(s)")
+        self.assertEqual(output.strip(), "2am:\t1 person high fived 1 person")
 
     def test_two_high_fives(self):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=50)
@@ -76,7 +76,7 @@ class TestHourlyRender(unittest.TestCase):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=55)
         event = events.HighFiveEvent(test_date, "Kate", "Lewis")
         output = main.render_hourly()
-        self.assertEqual(output.strip(), "2am:\t1 person(s) high fived 2 person(s)")
+        self.assertEqual(output.strip(), "2am:\t1 person high fived 2 people")
 
     def test_two_high_fivers(self):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=50)
@@ -85,7 +85,7 @@ class TestHourlyRender(unittest.TestCase):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=55)
         event = events.HighFiveEvent(test_date, "Lewis", "John")
         output = main.render_hourly()
-        self.assertEqual(output.strip(), "2am:\t2 person(s) high fived 1 person(s)")
+        self.assertEqual(output.strip(), "2am:\t2 people high fived 1 person")
 
 
 class TestDailyRender(unittest.TestCase):
@@ -99,7 +99,7 @@ class TestDailyRender(unittest.TestCase):
         test_date = datetime.datetime(year=2010, month=2, day=11, hour=2, minute=59)
         event = events.CommentEvent(test_date, "Kate", "was here")
         output = main.render_daily()
-        self.assertEqual(output.strip(), "2-10:\t1 person(s) left\n\t\n2-11:\t1 comment(s)")
+        self.assertEqual(output.strip(), "2-10:\t1 person left\n\t\n2-11:\t1 comment")
 
 
 if __name__ == '__main__':
