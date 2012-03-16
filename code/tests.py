@@ -34,8 +34,8 @@ class TestSingleEventRenders(unittest.TestCase):
 
 class TestHourlyRender(unittest.TestCase):
     def tearDown(self):
-        events.Event.hourly_bucket = collections.OrderedDict()
-        events.Event.daily_bucket = collections.OrderedDict()
+        events.Event.hourly_buckets = collections.OrderedDict()
+        events.Event.daily_buckets = collections.OrderedDict()
 
     def test_no_events(self):
         output = main.render_hourly()
@@ -90,8 +90,8 @@ class TestHourlyRender(unittest.TestCase):
 
 class TestDailyRender(unittest.TestCase):
     def tearDown(self):
-        events.Event.hourly_bucket = collections.OrderedDict()
-        events.Event.daily_bucket = collections.OrderedDict()
+        events.Event.hourly_buckets = collections.OrderedDict()
+        events.Event.daily_buckets = collections.OrderedDict()
 
     def test_two_days(self):
         test_date = datetime.datetime(year=2010, month=2, day=10, hour=2, minute=59)
